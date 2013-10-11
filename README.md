@@ -14,3 +14,8 @@ Code Kata
 [#卡1# localhost:3001服务器下页面.md](https://gist.github.com/jtong/6697173)
 
 [https://github.com/jtong-kata/](https://github.com/jtong-kata/)
+
+内功心法
+=========
+
+[AngularJS Git Commit Message Conventions](https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit)
