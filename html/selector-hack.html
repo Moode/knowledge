@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>选择器hack</title>
+
+    <style>
+        body{background: gray;}/*ALL Browser*/
+        *html p{color:red;}/*IE6*/
+        *+html p{color:orange;}/*IE7*/
+        html* p{font-size:100px;}/*IE7*/
+        *:first-child+html p{border:2px dotted green;}/*IE7*/
+        :root p{color:yellow;}/*IE9、FF、Chrome*/
+        :root p{color:green\9;}/*IE9*/
+        @-moz-document url-prefix(){#ff{color:blue;}}/*only FF*/
+        @media screen and (-webkit-min-device-pixel-ratio:0){#chrome{color:red;}}/*Chrome、Safari*/
+        @media all and (min-width:0){#opera1{color:yellow\0;}}/*Opera*/
+        @media all and (-webkit-min-device-pixel-ratio:10000),not all and (-webkit-min-device-pixel-ratio:0){#opera2{color:green\0;}}/*Opera*/
+        @media all and (min-width:0){#test1{color:red;}}/*IE9、FireFox、Chrome、Safari、Opera*/
+        html>/**/body #test2{color:blue;}/*IE8、IE9、FireFox、Chrome、Safari、Opera*/
+        html>body #test3{color:green;}/*IE7、IE8、IE9、FireFox、Chrome、Safari、Opera*/
+        @media screen and (max-device-width:480px){body{background-color:yellow;}}/*iPhone*/
+    </style>
+</head>
+
+<body>
+    <p style="width:80%;border:1px solid blue;font-size:50px;margin:auto;text-align: center;">我在各个浏览器中样子不太一样，试试吧！</p>
+    <div id="ff" style="width:80%;border:1px solid blue;font-size:50px;margin:auto;">我只有在FireFox中才是蓝色的。</div>
+    <div id="chrome" style="width:80%;border:1px solid red;font-size:50px;margin:auto;">我只有在Chrome或Safari中才是红色的。</div>
+    <div id="opera1" style="width:80%;border:1px solid red;font-size:50px;margin:auto;">我只有在Opera中才是黄色的。</div>
+    <div id="opera2" style="width:80%;border:1px solid red;font-size:50px;margin:auto;">我只有在Opera中才是绿色的。</div>
+
+    <div id="test1" style="width:80%;border:1px solid red;font-size:50px;margin:auto;">我在IE9、FireFox、Chrome、Safari、Opera样子是一样的，都是红色。</div>
+    <div id="test2" style="width:80%;border:1px solid red;font-size:50px;margin:auto;">我在IE8、IE9、FireFox、Chrome、Safari、Opera样子是一样的，都是蓝色。</div>
+    <div id="test3" style="width:80%;border:1px solid red;font-size:50px;margin:auto;">我在IE7、IE8、IE9、FireFox、Chrome、Safari、Opera样子是一样的，都是绿色。</div>
+    <div id="test4" style="width:80%;border:1px solid red;font-size:50px;margin:auto;">我只有在iPhone中才是黄色。</div>
+</body>
+</html>

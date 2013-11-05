@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <title>test</title>
+
+        <style>
+            /*::made-up-pseudo-element,p{font-size: 30px}*/
+            /*@media screen and (-webkit-min-device-pixel-ratio:0){p{font-size: 30px}}*/
+            /*@media \\0 screen{p{font-size:50px;}}*/
+            /*@media screen and (min-width:0\0){p{font-size: 30px}}*/
+            /*p{[;color:red;];}*/
+            /*p{(;font-size:100px;);}*/
+            /*body:empty p{color:red;}*/
+            /*p,x:-moz-any-link{color:red;}*/
+            /*p,x:-moz-any-link,x:default{color:red;}*/
+            /*body:not(:-moz-handler-blocked) p{color:red;}*/
+            /*@media screen and (-moz-images-in-menus:0) {p{color:red;}}*/
+            /*@media screen and (-moz-images-in-menus) {p{color:red;}}*/
+            /*@media screen and (min--moz-device-pixel-ratio:0){p{color:red;}}*/
+            /*@-moz-document url-prefix(){p{color:red;}}*/
+            /*:root * > p{font-size: 100px;}*/
+            /*body:last-child span{color:red;}*/
+            /*body:nth-of-type(1) p{font-size:100px;}*/
+            /*body:first-of-type p{color:red;}*/
+            /*p:not([attr*=""]){font-size:50px;}*/
+            /*@media \0screen\,screen\9 {p{color:red;}}*/
+            /*@media screen and (-ms-high-contrast:active), (-ms-high-contrast: none){p{color:red;}}*/
+            /*@media screen {@media(min-width:0px) {p{font-size:100px;}}}*/
+            /*p{color:red !important;}*/
+            /*p{!font-size:50px;}*/
+            /*p{$font-size:50px;}*/
+            /*p{&font-size:50px;}*/
+            /*p{*font-size:50px;}*/
+            /*p{)font-size:50px;}*/
+            /*p{=font-size:50px;}*/
+            /*p{%font-size:50px;}*/
+            /*p{+font-size:50px;}*/
+            /*p{@font-size:50px;}*/
+            /*p{,font-size:50px;}*/
+            /*p{.font-size:50px;}*/
+            /*p{/font-size:50px;}*/
+            /*p{`font-size:50px;}*/
+            /*p{[font-size:50px;}*/
+            /*p{]font-size:50px;}*/
+            /*p{#font-size:50px;}*/
+            /*p{~font-size:50px;}*/
+            /*p{?font-size:50px;}*/
+            /*p{:font-size:50px;}*/
+            /*p{|font-size:50px;}*/
+            /**|html[xmlns*=""] p{color:red;}*/
+            /*html:first-child p{font-size:100px;}*/
+            /*html[xmlns*=""] body:last-child p{font-size:100px;}*/
+            /*@media screen {@media (min-width:0px){p{font-size:100px;}}}*/
+        </style>
+    </head>
+
+    <body>
+        <p id="p1">This is a test.</p>
+        <p id="p2">This is a test.</p>
+        <span>This is a test too.</span>
+        <div>This is a test.</div>
+        <input id="input" value="This is at a test">
+    </body>
+</html>
+
+<script type="text/javascript">
+//    var isChromium = !!window.chrome&&!!window.chrome.webstore;
+//    if(isChromium){
+//        document.getElementById("input").style.color = "red";
+//    }
+//
+//    var isWebkit = 'WebkitAppearance' in document.documentElement.style;
+//    if(isWebkit){
+//        document.getElementById("input").style.color = "red";
+//    }
+//    var isFF = !!window.sidebar;
+//    if(isFF){
+//        document.getElementById("input").style.fontSize = "100px";
+//    }
+//    var isFF = 'MozAppearance' in document.documentElement.style;
+//    if(isFF){
+//        document.getElementById("input").style.color = "red";
+//    }
+//    var isFF = !!navigator.userAgent.match(/FireFox/i);
+//    var isFF = !!window.globalStorage;
+    var isFF = (function x(){})[-5]=='x';
+//    var isFF = typeof InstallTrigger !== 'undefined';
+//    var isFF = /a/[-1]=='a';
+    if(isFF){
+        document.getElementById("input").style.color = "blue";
+    }
+
+//    var isIE = document.body.style.msTouchAction !== undefined;
+//    var isIE = window.navigator.msPointerEnabled;
+//    if(!isIE){
+//        document.getElementById("input").style.color = "blue";
+//    }
+//    var isOpera = !!window.opera;
+//    if(!isOpera){
+//        document.getElementById("input").style.color = "red";
+//    }
+//    var isSafari = /a/.__proto__=='//'
+//    if(!isSafari){
+//        document.getElementById("input").style.color = "green";
+//    }
+</script>

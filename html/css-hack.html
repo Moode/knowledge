@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>演示: 区分IE6/IE7/IE8/IE9/FireFox/Chrome</title>
+
+    <style type="text/css" media="screen">
+        #browser{
+            color:pink;font-size: 20px;/*All Browser*/
+            color:green !important;font-size: 30px !important;/*FireFox*/
+            [;border:1px solid red;];/*Chrome*/
+            color:brown\9;font-size: 40px\9;/*All IE*/
+            border:/**/10px solid red;/*except IE6*/
+            color:orange\9\0;font-size:80px\9\0;/*IE9*/
+            color:yellow\0;font-size: 50px\0;/*IE8*/
+            font-family/*\**/: fantasy;/*IE7 IE8*/
+            *color:blue;*font-size: 60px;/*IE6 IE7*/
+            +background:red;+font-family: arial;/*IE7*/
+            _color:red;_font-size: 70px;/*IE6*/
+        }
+        *html #ie6{font-size:100px;}/*ie6*/
+        *+html #ie7{font-size:200px;border:1px solid blue;}/*ie7*/
+        :root #ie9{color:yellow;border:1px\0 dotted\0 red\0;}/*IE9 FireFox Chrome*/
+        :root span{background-color: palegreen;}/*IE9 FireFox Chrome*/
+        p:nth-of-type(1){background-color: #000000;}/*FireFox Chrome*/
+        div:nth-of-type(3){font-size:50px;}/*FireFox Chrome*/
+        @-moz-document url-prefix(){body{background-color:pink;}}/*FireFox*/
+        @media screen and (-webkit-min-device-pixel-ratio:0){body{background-color:yellow;}}/*Chrome*/
+        @media screen and (-webkit-min-device-pixel-ratio:0){span{text-decoration:underline;}}/*Chrome*/
+        @media all and (min-width:0px){body{background-color:purple\0;}}/*Safari,若不加\0，FF和Chrome也都认识*/
+    </style>
+</head>
+
+
+
+<body>
+
+    <div>
+        一.CSS hack简介：<br />
+        &emsp;&emsp;由于不同的浏览器，比如IE6、IE7、IE8、FireFox、Chrome、Opera和Safari
+        等浏览器对CSS的解析认识不一样，因此会导致生成的页面效果不一样，得不到我们所需要的页面效果。 这个时候我们就需要针对不同的浏览器去写不
+        同的CSS，让它能够同时兼容不同的浏览器，能在不同的浏览器中也能得到我们想要的页面效果。这个针对不同的浏览器写不同的CSS code的过程，就
+        叫CSS hack!<br />
+    </div>
+    <div>
+        二.CSS hack原理：<br/>
+        &emsp;&emsp;由于不同的浏览器对CSS的支持及解析结果不一样，还由于CSS中的优先级的关系。我们就可以根据这个来针对不同的浏览器来写不同的CSS。<br/>
+        &emsp;&emsp;CSS Hack大致有3种表现形式，CSS类内部Hack、选择器Hack以及HTML头部引用(if IE)Hack，CSS Hack主要针对IE浏览器。<br/>
+        &emsp;&emsp;类内部Hack：比如 IE6能识别下划线"_"和星号" * "，IE7能识别星号" * "，但不能识别下划线"_"，而firefox两个都不能认识，等等。<br/>
+        &emsp;&emsp;选择器Hack：比如 IE6能识别*html .class{}，IE7能识别*+html .class{}或者*:first-child+html .class{}，等等。<br/>
+        &emsp;&emsp;HTML[1]头部引用(if IE)Hack：<br/>
+        &emsp;&emsp;针对所有IE：<br/>
+        &emsp;&emsp;&lt;!--[if IE]&gt;&lt;!--您的代码--&gt;&lt;![endif]--&gt;<br/>
+        &emsp;&emsp;针对IE6及以下版本：<br/>
+        &emsp;&emsp;&lt;!--[if lt IE 7]&gt;&lt;!--您的代码--&gt;&lt;![endif]--&gt;<br/>
+        &emsp;&emsp;这类Hack不仅对CSS生效，对写在判断语句里面的所有代码都会生效。<br/>
+        &emsp;&emsp;书写顺序，一般是将识别能力强的浏览器的CSS写在前面。下面详细说一下。<br/>
+    </div>
+    <div>
+        <div style="font-size:16px;margin-bottom:20px;">
+            三.各浏览器CSS hack兼容表（部分）<br/>
+        </div>
+        <div>
+            <img src="../img/3.png" style="margin-left:15%;width:70%;">
+        </div>
+    </div>
+    <div>
+        四.CSS内部hack<br/>
+        &emsp;&emsp;CSS内部hack包括："*"、"_"、"+"、"\0"、"\9"、"\9\0"、"!important"、"[;属性:属性值;];"、"/**/"、"/*\**/"等。<br/>
+        &emsp;&emsp;用法：<br/>
+        &emsp;&emsp;IE6:_属性名:属性值;如：_color:red;<br/>
+        &emsp;&emsp;IE6、7:*属性名:属性值;如：*color:red;<br/>
+        &emsp;&emsp;IE7:+属性名:属性值;如：+color:red;<br/>
+        &emsp;&emsp;IE7、8:属性名/*\**/:属性值\9;如：color/*\**/:red\9;<br/>
+        &emsp;&emsp;IE8、9:属性名:属性值\0;如：color:red\0;<br/>
+        &emsp;&emsp;IE9:属性名:属性值\9\0;如：color:red\9\0;<br/>
+        &emsp;&emsp;All IE:属性名:属性值\9;如：color:red\9;<br/>
+        &emsp;&emsp;IE7、FireFox、Chrome:属性名:属性值 !important;如：color:red !important;<br/>
+        &emsp;&emsp;Chrome、safari:[;属性名:属性值;];;如：[;color:red;];;<br/>
+        &emsp;&emsp;except IE6:属性名:/**/属性值;如：color:/**/red;<br/>
+    </div>
+    <div>
+        五.选择器hack<br/>
+        &emsp;&emsp;用法：<br/>
+        &emsp;&emsp;IE6:*html 选择符{属性名：属性值；}，如：*html p{font-size:30px;}<br/>
+        &emsp;&emsp;IE7:*+html 选择符{属性名：属性值；}，如：*+html p{font-size:30px;}<br/>
+        &emsp;&emsp;IE7:html* 选择符{属性名：属性值；}，如：html* p{font-size:30px;}<br/>
+        &emsp;&emsp;IE7:*:first-child+html 选择符{属性名：属性值；}，如：*:first-child+html p{font-size:30px;}<br/>
+        &emsp;&emsp;IE9::root 选择符{属性名：属性值\9；}，如：:root p{font-size:30px;}<br/>
+        &emsp;&emsp;FireFox:@moz-document url-prefix(){选择符{属性名：属性值；}}，如：@-moz-document url-prefix(){body{background-color:pink;}}<br/>
+        &emsp;&emsp;Chrome、Safari:选择符{(-bracket-:hack;color:red;);},如：p{(-bracket-:hack;color:red;);},其中的圆括号可以换成方括号<br/>
+        &emsp;&emsp;Chrome、Safari:@media screen and (-webkit-min-device-pixel-ratio:0){选择符{属性名：属性值；}}，如：<br/>
+        &emsp;&emsp;&emsp;&emsp;@media screen and (-webkit-min-device-pixel-ratio:0){body{background-color:yellow;}}<br/>
+        &emsp;&emsp;Opera:@media all and (min-width:0){选择符{属性名：属性值\0；}}，如：@media all and (min-width:0){body{background-color:gray;}}<br/>
+        &emsp;&emsp;Opera:@media all and (-webkit-min-device-pixel-ratio:10000),not all and (-webkit-min-device-pixel-ratio:0){选择符{属性名：属性值；}}，如：<br/>
+        &emsp;&emsp;&emsp;&emsp;@media all and (-webkit-min-device-pixel-ratio:10000),not all and (-webkit-min-device-pixel-ratio:0){body{background-color:red；}}<br/>
+        &emsp;&emsp;IE9、FireFox、Chrome、Safari、Opera：@media all and (min-width:0){选择符{属性名：属性值；}},如：@media all and (min-width:0){body{background-color:red;}}<br/>
+        &emsp;&emsp;IE8、IE9、FireFox、Chrome、Safari、Opera：html>/**/body 选择符{属性名：属性值；},如：html>/**/body p{background-color:red;}<br/>
+        &emsp;&emsp;IE7、IE8、IE9、FireFox、Chrome、Safari、Opera：html>body 选择符{属性名：属性值；},如：html>body p{background-color:red;}<br/>
+        &emsp;&emsp;iPhone：@media screen and (max-device-width:480px){选择符{属性名：属性值；}},如：@media screen and (max-device-width:480px){body{background-color：red；}}<br/>
+    </div>
+    <div>
+        六.HTML头部引用(if IE)Hack<br/>
+        &emsp;&emsp;<a href="ie-conditional-comments.html" target="_blank">详细内容</a>
+    </div>
+    <div>
+        七.部分例子<br/>
+        <div id="browser" class="size">
+            <span style="display:block;display:none\9;height:auto;">在不同浏览器打开本页面，我长的样子是不一样的。如果我有下划线且有红框，那你用的是Chrome。如果你能看到我，那你用的不是IE8或9。</span>
+            <!--[if IE 8]>不错不错，挺先进的嘛，使用IE8呢！文字是黄色的。<![endif]-->
+            <!--[if IE 7]>你，IE7，蓝色文字！<![endif]-->
+            <!--[if IE 6]>孩子，虽然显示的是红色文字，不过，IE6可不是好东西呢！<![endif]-->
+        </div>
+        <div>
+            &emsp;&emsp;<a href="css-inner-hack.html" target="_blank">CSS内部hack</a><br/>
+            &emsp;&emsp;<a href="selector-hack.html" target="_blank">选择器hack</a><br/>
+            &emsp;&emsp;<a href="ie-conditional-comments.html" target="_blank">HTML头部引用(if IE)Hack</a><br/>
+            &emsp;&emsp;<a href="browser-hack.html" target="_blank">浏览器专属css hack</a><br/>
+            &emsp;&emsp;<a href="ie-ff.html" target="_blank">IE和FireFox中的部分细节内容</a><br/>
+            &emsp;&emsp;<a href="attation.html" target="_blank">注意事项</a><br/>
+            &emsp;&emsp;<a href="other.html" target="_blank">其他问题</a><br/>
+        </div>
+    </div>
+</body>
+</html>
