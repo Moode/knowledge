@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+        <title>浏览器专属css hack</title>
+
+        <style>
+             body{background: gray;}
+             h1{text-align: center;}
+             p{
+                 width:80%;
+                 heigth:auto;
+                 margin:auto;
+                 border:1px dotted blue;
+                 background:greenyellow;
+                 color:black;font-size:30px;
+             }
+        </style>
+    </head>
+
+    <body>
+        <h1>更详细的浏览器专属css hack，以下内容引自:http://browserHacks.com</h1>
+        <div>
+            一、Android<br/>
+            &emsp;1.选择器Hacks<br/>
+            &emsp;&emsp;::made-up-pseudo-element,选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:Chrome 24-、Safari 6、IE7、Android 4.1+<br/>
+            &emsp;&emsp;验证:Chrome、FF没有效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;2.Media Query Hacks<br/>
+            &emsp;&emsp;@media screen and (-webkit-min-device-pixel-ratio:0){选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:Chrome *、Safari 3+、Opera 9.26-/14+、Android 2.3+<br/>
+            &emsp;&emsp;验证:Chrome有效果、FF没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media screen and (min-width:0\0){选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:IE 10+、Safari 4、Android 2.3+<br/>
+            &emsp;3.JavaScript Hacks<br/>
+            &emsp;&emsp;var isChromium = !!window.chrome;<br/>
+            &emsp;&emsp;适用范围:Chrome *、Opera 14+、Android 4.0.4<br/>
+            &emsp;&emsp;例子：<br/>
+            &emsp;&emsp;&emsp;&lt;!DOCTYPE html&gt;<br/>
+            &emsp;&emsp;&emsp;&lt;html&gt;<br/>
+            &emsp;&emsp;&emsp;&emsp;&lt;head&gt;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;&lt;meta http-equiv="Content-Type" content="text/html;charset=utf-8"&gt;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;&lt;title&gt;&lt;test&lt;/title&gt;<br/>
+            &emsp;&emsp;&emsp;&emsp;&lt;/head&gt;<br/>
+            &emsp;&emsp;&emsp;&emsp;&lt;body&gt;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;&lt;input id="input" value="This is a test"&gt;<br/>
+            &emsp;&emsp;&emsp;&emsp;&lt;/body&gt;<br/>
+            &emsp;&emsp;&emsp;&lt;/html&gt;<br/>
+            &emsp;&emsp;&emsp;&lt;script type="text/javascript"&gt;<br/>
+            &emsp;&emsp;&emsp;&emsp;var isChromium = !!window.chrome;<br/>
+            &emsp;&emsp;&emsp;&emsp;if(isChromium){<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;document.getElementById("input").style.color = "red";<br/>
+            &emsp;&emsp;&emsp;&emsp;}<br/>
+            &emsp;&emsp;&emsp;&lt;/script&gt;<br/>
+            &emsp;&emsp;在Chrome中打开这样的页面，input的文字是红色的；在FF中却不是。JavaScript Hacks其实是根据一些js条件的判断结果来确定用户所用的浏览
+            器是哪一种，然后根据要求规定样式。而且，js判断条件和浏览器无关，任何浏览器中都可以写这样的判断条件，不像其他的一些hack方式，一种浏览器只能识别几种
+            特殊的符号，以下JS Hacks就不再写例子了，大概用法就是这样。
+        </div>
+        <div>
+            二、Chrome<br/>
+            &emsp;1.选择器Hacks<br/>
+            &emsp;&emsp;::made-up-pseudo-element,选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:Chrome 24-、Safari 6、IE7、Android 4.1+<br/>
+            &emsp;&emsp;验证:Chrome、FF没有效果;其他未验证<br/>
+            &emsp;2.Media Query Hacks<br/>
+            &emsp;&emsp;@media screen and (-webkit-min-device-pixel-ratio:0){选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:Chrome *、Safari 3+、Opera 9.26-/14+、Android 2.3+<br/>
+            &emsp;&emsp;验证:Chrome有效果、FF没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media \\0 screen{选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:Chrome 22-28<br/>
+            &emsp;&emsp;验证:Chrome有效果、FF没效果;其他未验证<br/>
+            &emsp;3.JavaScript Hacks<br/>
+            &emsp;&emsp;var isChromium = !!window.chrome;<br/>
+            &emsp;&emsp;适用范围:Chrome *、Opera 14+、android 4.0.4<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isChrome = !!window.chrome && !!window.chrome.webstore;<br/>
+            &emsp;&emsp;适用范围:Chrome 14+<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isWebkit = 'WebkitAppearance' in document.documentElement.style;<br/>
+            &emsp;&emsp;适用范围:Chrome *、Safari 3+、Opera 14+<br/>
+            &emsp;&emsp;验证：三种方法都可以<br/>
+            &emsp;4.Property/Value Hacks<br/>
+            &emsp;&emsp;选择器{(;property: value;);}<br/>
+            &emsp;&emsp;选择器{[;property: value;];}<br/>
+            &emsp;&emsp;适用范围:chrome 28-、safari 6-、opera 14+<br/>
+            &emsp;&emsp;验证:Chrome有效果、FF没效果;其他未验证<br/>
+        </div>
+        <div>
+            三、FireFox<br/>
+            &emsp;1.选择器Hacks<br/>
+            &emsp;&emsp;body:empty 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:chrome 28-、safari 6-、opera 14+<br/>
+            &emsp;&emsp;验证:Chrome、FF没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;选择器,x:-moz-any-link {属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:FireFox 2+、IE 7<br/>
+            &emsp;&emsp;验证:FF有效果、Chrome没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;选择器,x:-moz-any-link,x:default{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:FireFox 3+、IE 7<br/>
+            &emsp;&emsp;验证:FF有效果、Chrome没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;body:not(:-moz-handler-blocked) 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:FireFox 3.5+<br/>
+            &emsp;&emsp;验证:FF有效果、Chrome没效果;其他未验证<br/>
+            &emsp;2.Media Query Hacks<br/>
+            &emsp;&emsp;@media screen and (-moz-images-in-menus:0) {选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:FireFox 3.6+<br/>
+            &emsp;&emsp;验证:FF、Chrome没效果;其他未验证,如果把：0去掉，在FF中就可以了<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media screen and (min--moz-device-pixel-ratio:0) {选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:FireFox 4+<br/>
+            &emsp;&emsp;验证:FF有效果、Chrome没效果;其他未验证<br/>
+            &emsp;3.JavaScript Hacks<br/>
+            &emsp;&emsp;var isFF = !!window.sidebar;<br/>
+            &emsp;&emsp;适用范围:FireFox *<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isFF = 'MozAppearance' in document.documentElement.style;<br/>
+            &emsp;&emsp;适用范围:FireFox *<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isFF = !!navigator.userAgent.match(/FireFox/i);<br/>
+            &emsp;&emsp;适用范围:FireFox *<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isFF = typeof InstallTrigger !== 'undefined';<br/>
+            &emsp;&emsp;适用范围:FireFox 1.5+<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isFF = (function x(){})[-5]=='x';<br/>
+            &emsp;&emsp;适用范围:FireFox 3<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isFF = !!window.globalStorage;<br/>
+            &emsp;&emsp;适用范围:FireFox 2-13<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isFF = /a/[-1]=='a';<br/>
+            &emsp;&emsp;适用范围:FireFox 2-3<br/>
+            &emsp;&emsp;验证:最后三种方法没有起作用<br/>
+            &emsp;4.Miscellaneous（杂项）<br/>
+            &emsp;&emsp;@-moz-document url-prefix() {}<br/>
+            &emsp;&emsp;适用范围:FireFox 3+<br/>
+            &emsp;&emsp;验证：FF中有效果、Chrome中没有；其他未验证<br/>
+        </div>
+        <div>
+            四、IE<br/>
+            &emsp;1.选择器Hacks
+            &emsp;&emsp;*:first-child+html 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;选择器,x:-IE7 {属性名:属性值;}<br/>
+            &emsp;&emsp;*+html 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;body* 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;选择器\ {属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:IE7<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;::made-up-pseudo-element,选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:chrome 24-、safari 6、IE7、android 4.1+<br/>
+            &emsp;&emsp;验证:Chrome、FF没有效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;选择器,{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:IE7-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;选择器,x:-moz-any-link{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:FireFox 2+、IE7<br/>
+            &emsp;&emsp;验证:FF有效果、Chrome没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;选择器\ {属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:IE7<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;选择器,x:-moz-any-link,x:default{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:FireFox 3+、IE7<br/>
+            &emsp;&emsp;验证:FF有效果、Chrome没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;html > /**/ body 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;head ~ /**/ body 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:IE7-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;_:-o-prefocus,选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:opera 9.5/10/11/12、IE7<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;:root * > 选择器{属性名:属性值;}/*Chrome、FF有效，其他未验证*/<br/>
+            &emsp;&emsp;body:last-child 选择器{属性名:属性值;}/*Chrome、FF有效，其他未验证*/<br/>
+            &emsp;&emsp;body:nth-of-type(1) 选择器{属性名:属性值;}/*Chrome、FF有效，且圆括号中的数字只能为1，其他的数字都会使其无效；其他未验证*/<br/>
+            &emsp;&emsp;body:first-of-type 选择器{属性名:属性值;}/*Chrome、FF有效，其他未验证*/<br/>
+            &emsp;&emsp;选择器:not([attr*='']){属性名:属性值;}/*Chrome、FF有效，其他未验证*/<br/>
+            &emsp;&emsp;适用范围:IE8-<br/>
+            &emsp;2.Media Query Hacks<br/>
+            &emsp;&emsp;@media screen\9 {选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:IE7-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media \0screen\,screen\9 {选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:IE8-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media \0screen {选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:IE8<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media screen and (min-width:0\0) {选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:IE10+ safari 4 android 2.3+<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media screen and (-ms-high-contrast:active), (-ms-high-contrast: none) {选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:IE10<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media screen {@media(min-width:0px) {选择器{属性名:属性值;}}}<br/>
+            &emsp;&emsp;适用范围:IE*、safari *<br/>
+            &emsp;&emsp;验证：Chrome、FF有效，其他未验证<br/>
+            &emsp;3.Property/Value Hacks<br/>
+            &emsp;&emsp;选择器{property: value\9;}<br/>
+            &emsp;&emsp;选择器{property/*\**/: value\9;}<br/>
+            &emsp;&emsp;适用范围:IE6+<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;选择器{property:value !ie;}<br/>
+            &emsp;&emsp;适用范围:IE7-,Acts as an !important;string after ! can be anything<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;选择器{!property:value;}<br/>
+            &emsp;&emsp;选择器{$property:value;}<br/>
+            &emsp;&emsp;选择器{&property:value;}<br/>
+            &emsp;&emsp;选择器{*property:value;}<br/>
+            &emsp;&emsp;选择器{)property:value;}<br/>
+            &emsp;&emsp;选择器{=property:value;}<br/>
+            &emsp;&emsp;选择器{%property:value;}<br/>
+            &emsp;&emsp;选择器{+property:value;}<br/>
+            &emsp;&emsp;选择器{@property:value;}<br/>
+            &emsp;&emsp;选择器{,property:value;}<br/>
+            &emsp;&emsp;选择器{.property:value;}<br/>
+            &emsp;&emsp;选择器{/property:value;}<br/>
+            &emsp;&emsp;选择器{`property:value;}<br/>
+            &emsp;&emsp;选择器{[property:value;}<br/>
+            &emsp;&emsp;选择器{]property:value;}<br/>
+            &emsp;&emsp;选择器{#property:value;}<br/>
+            &emsp;&emsp;选择器{~property:value;}<br/>
+            &emsp;&emsp;选择器{?property:value;}<br/>
+            &emsp;&emsp;选择器{:property:value;}<br/>
+            &emsp;&emsp;选择器{|property:value;}<br/>
+            &emsp;&emsp;适用范围:IE7-，Any combination of these characters: ! $ & * ( ) = % + @ , . / ` [ ] # ~ ? : < > |<br/>
+            &emsp;&emsp;验证：Chrome、FF没效果；其他未验证<br/>
+            &emsp;4.JavaScript Hacks<br/>
+            &emsp;&emsp;Check for IEversion<br/>
+            &emsp;&emsp;var ieVersion = /*@cc_on (function() {<br/>
+            &emsp;&emsp;switch(@_jscript_version) {<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;case 1.0: return 3;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;case 3.0: return 4;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;case 5.0: return 5;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;case 5.1: return 5;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;case 5.5: return 5.5;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;case 5.6: return 6;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;case 5.7: return 7;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;case 5.8: return 8;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;case 9: return 9;<br/>
+            &emsp;&emsp;&emsp;&emsp;&emsp;case 10: return 10;<br/>
+            &emsp;&emsp;&emsp;&emsp;}<br/>
+            &emsp;&emsp;})() || @*/ 0;<br/>
+            &emsp;&emsp;适用范围:IE3-10<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && document.compatMode;<br/>
+            &emsp;&emsp;适用范围:IE6-10<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && window.XMLHttpRequest && !document.querySelector;<br/>
+            &emsp;&emsp;适用范围:IE7<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && window.XMLHttpRequest;<br/>
+            &emsp;&emsp;适用范围:IE7-10<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && !document.querySelector;<br/>
+            &emsp;&emsp;适用范围:IE7-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = navigator.appVersion.indexOf("MSIE 7.") !== -1;<br/>
+            &emsp;&emsp;适用范围:IE7<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = !+'\v1';<br/>
+            &emsp;&emsp;适用范围:IE8-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = '\v'=='v';<br/>
+            &emsp;&emsp;适用范围:IE8-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && document.querySelector;<br/>
+            &emsp;&emsp;适用范围:IE8-10<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && !document.addEventListener;<br/>
+            &emsp;&emsp;适用范围:IE8-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && document.querySelector && !document.addEventListener;<br/>
+            &emsp;&emsp;适用范围:IE8<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && document.addEventListener;<br/>
+            &emsp;&emsp;适用范围:IE9-10<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && document.addEventListener && !window.atob;<br/>
+            &emsp;&emsp;适用范围:IE9<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && !window.atob;<br/>
+            &emsp;&emsp;适用范围:IE9-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = /*@cc_on!@*/false;<br/>
+            &emsp;&emsp;适用范围:IE10-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.all && window.atob;<br/>
+            &emsp;&emsp;适用范围:IE10<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;Check for IEversion<br/>
+            &emsp;&emsp;var ieVersion = (function() { if (new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})").exec(navigator.userAgent) != null) { return parseFloat( RegExp.$1 ); } else { return false; } })();<br/>
+            &emsp;&emsp;适用范围:IE*<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = eval("/*@cc_on!@*/false") && document.documentMode === 10;<br/>
+            &emsp;&emsp;适用范围:IE10<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = document.body.style.msTouchAction !== undefined;<br/>
+            &emsp;&emsp;适用范围:IE10+<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = window.navigator.msPointerEnabled;<br/>
+            &emsp;&emsp;适用范围:IE10+<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = 'behavior' in document.documentElement.style && '-ms-user-select' in document.documentElement.style;<br/>
+            &emsp;&emsp;适用范围:IE10+<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isIE = '-ms-scroll-limit' in document.documentElement.style && '-ms-ime-align' in document.documentElement.style;<br/>
+            &emsp;&emsp;适用范围:IE11<br/>
+            &emsp;&emsp;5.条件注释<br/>
+            &emsp;&emsp;&lt;!--[if IE]&gt;IE&lt;![endif]--&gt;<br/>
+            &emsp;&emsp;适用范围:IE*<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;&lt;![if !IE]&gt;Not IE&lt;![endif]&gt;<br/>
+            &emsp;&emsp;适用范围:IE*<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;&lt;!--[if IE X]&gt;IEX&lt;![endif]--> <br/>
+            &emsp;&emsp;适用范围:IE6-9<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;&lt;!--[if lte IE X]&gt;IEX or less&lt;![endif]--><br/>
+            &emsp;&emsp;适用范围:IE6-9<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;&lt;!--[if gte IE X]&gt;IEX or greater&lt;![endif]--><br/>
+            &emsp;&emsp;适用范围:IE6-9<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;&lt;!--[if (IE X)|(IE Y)]&gt;IEX or IEY&lt;![endif]--><br/>
+            &emsp;&emsp;适用范围:IE6-9<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;&lt;!--[if (gte IE X)&(lte IE Y)]&gt;IEbetween X and Y (included)&lt;![endif]--><br/>
+            &emsp;&emsp;适用范围:IE6-9<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;Conditional classes<br/>
+            &emsp;&emsp;&lt;!--[if lt IE 7]>&lt;html class='ie ie6 lte9 lte8 lte7'>&lt;![endif]--><br/>
+            &emsp;&emsp;&lt;!--[if IE 7]>&lt;html class='ie ie7 lte9 lte8 lte7'>&lt;![endif]--><br/>
+            &emsp;&emsp;&lt;!--[if IE 8]>&lt;html class='ie ie8 lte9 lte8'>&lt;![endif]--><br/>
+            &emsp;&emsp;&lt;!--[if IE 9]>&lt;html class='ie ie9 lte9'>&lt;![endif]--><br/>
+            &emsp;&emsp;&lt;!--[if gt IE 9]>&lt;html>&lt;![endif]--><br/>
+            &emsp;&emsp;&lt;!--[if !IE]>&lt;!--> &lt;html>&lt;!--&lt;![endif]--><br/>
+            &emsp;&emsp;适用范围:IE6-9<br/>
+        </div>
+        <div>
+            五、Opera<br/>
+            &emsp;1.选择器Hacks<br/>
+            &emsp;&emsp;*|html[xmlns*=""]选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:safari 2/3.1、opera 9.25<br/>
+            &emsp;&emsp;验证：Chrome、FF无效；其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;html:first-child 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:opera 9.27-、safari 2<br/>
+            &emsp;&emsp;验证：Chrome、FF无效；其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;_:-o-prefocus,选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:opera 9.5/10/11/12、IE7<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;noindex:-o-prefocus,选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:Opera 9.5+<br/>
+            &emsp;2.Media Query Hacks<br/>
+            &emsp;&emsp;@media all and (-webkit-min-device-pixel-ratio:10000), not all and (-webkit-min-device-pixel-ratio:0){选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:opera 11-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media screen and (-webkit-min-device-pixel-ratio:0){选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:chrome *、safari 3+、opera 9.26-/14+、android 2.3+<br/>
+            &emsp;&emsp;验证:Chrome有效果、FF没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media (min-resolution: .001dpcm){ _:-o-prefocus,选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:opera 12<br/>
+            &emsp;3.Property/Value Hacks
+            &emsp;&emsp;选择器 {(;property: value;);}<br/>
+            &emsp;&emsp;选择器 {[;property: value;];}<br/>
+            &emsp;&emsp;适用范围:chrome 28-、safari 6-、opera 14+<br/>
+            &emsp;&emsp;验证:Chrome有效果、FF没效果;其他未验证<br/>
+            &emsp;4.JavaScript Hacks<br/>
+            &emsp;&emsp;var isOpera = /^function\(/.test([].sort);<br/>
+            &emsp;&emsp;适用范围:opera 9.64-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;Replace X by the version
+            &emsp;&emsp;var isOpera = window.opera && window.opera.version() == X;<br/>
+            &emsp;&emsp;适用范围:opera 12-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isOpera = !!window.opera;<br/>
+            &emsp;&emsp;适用范围:opera 12.16-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isChromium = !!window.chrome;<br/>
+            &emsp;&emsp;适用范围:chrome *、opera 14+、android 4.0.4
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;Webkit<br/>
+            &emsp;&emsp;var isWebkit = 'WebkitAppearance' in document.documentElement.style;<br/>
+            &emsp;&emsp;适用范围:chrome *、safari 3+、opera 14+<br/>
+        </div>
+        <div>
+            六、Safari<br/>
+            &emsp;1选择器 Hacks<br/>
+            &emsp;&emsp;html[xmlns*=""] body:last-child 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp; html[xmlns*=""] :root 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:safari 2-3<br/>
+            &emsp;&emsp;验证:Chrome、FF没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;*|html[xmlns*=""] 选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:safari 2/3.1、opera 9.25<br/>
+            &emsp;&emsp;验证:Chrome、FF没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;::made-up-pseudo-element,选择器{属性名:属性值;}<br/>
+            &emsp;&emsp;适用范围:chrome 24-、safari 6、IE7、android 4.1+<br/>
+            &emsp;&emsp;验证:Chrome、FF没效果;其他未验证<br/>
+            &emsp;2.Media Query Hacks<br/>
+            &emsp;&emsp;@media screen and (-webkit-min-device-pixel-ratio:0){选择器{属性名:属性值;}}<br/>
+            &emsp;&emsp;适用范围:chrome *、safari 3+、opera 9.26-/14+、android 2.3+<br/>
+            &emsp;&emsp;验证:Chrome有效果、FF没效果;其他未验证<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;@media screen {@media (min-width:0px){选择器{属性名:属性值;}}}<br/>
+            &emsp;&emsp;适用范围:IE*、safari *<br/>
+            &emsp;&emsp;验证:Chrome、FF有效果;其他未验证<br/>
+            &emsp;3.Property/Value Hacks<br/>
+            &emsp;&emsp;选择器{(;property:value;);}<br/>
+            &emsp;&emsp;选择器{[;property:value;];}<br/>
+            &emsp;&emsp;适用范围:chrome 28-、safari 6-、opera 14+<br/>
+            &emsp;&emsp;验证:Chrome有效果、FF没效果;其他未验证<br/>
+            &emsp;4.JavaScript Hacks<br/>
+            &emsp;&emsp;Webkit<br/>
+            &emsp;&emsp;var isWebkit = 'WebkitAppearance' in document.documentElement.style;<br/>
+            &emsp;&emsp;适用范围:chrome *、safari 3+、opera 14+<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isSafari = /a/.__proto__=='//';<br/>
+            &emsp;&emsp;适用范围:safari 5-<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isSafari = /Constructor/.test(window.HTMLElement);<br/>
+            &emsp;&emsp;适用范围:safari *<br/>
+            <div style="width:100%;height:10px;"></div>
+            &emsp;&emsp;var isSafari = !!navigator.userAgent.match(/safari/i) &&<br/>
+            &emsp;&emsp;!navigator.userAgent.match(/chrome/i) &&<br/>
+            &emsp;&emsp;typeof document.body.style.webkitFilter !== "undefined";<br/>
+            &emsp;&emsp;适用范围:safari 6<br/>
+        </div>
+    </body>
+</html>

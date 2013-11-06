@@ -1,0 +1,319 @@
+
+1.CSS hack定义：由于不同的浏览器，比如IE6,IE7,IE8,Mozilla FireFox,Chrome，Opera和Safari等浏览器对CSS的解析认识不一样，
+    因此会导致生成的页面效果不一样，得不到我们所需要的页面效果。 这个时候我们就需要针对不同的浏览器去写不同的CSS，让它能够同时兼容
+    不同的浏览器，能在不同的浏览器中也能得到我们想要的页面效果。这个针对不同的浏览器写不同的CSS code的过程，就叫CSS hack!
+    CSS Hack大致有3种表现形式，CSS类内部Hack、选择器Hack以及HTML头部引用(if IE)Hack，CSS Hack主要针对IE浏览器。
+    类内部Hack：比如 IE6能识别下划线"_"和星号" * "，IE7能识别星号" * "，但不能识别下划线"_"，而firefox两个都不能认识，等等。
+    选择器Hack：比如 IE6能识别*html .class{}，IE7能识别*+html .class{}或者*:first-child+html .class{}，等等。
+    HTML[1]头部引用(if IE)Hack：
+    针对所有IE：
+    <!--[if IE]><!--您的代码--><![endif]-->
+    针对IE6及以下版本：
+    <!--[if lt IE 7]><!--您的代码--><![endif]-->
+    这类Hack不仅对CSS生效，对写在判断语句里面的所有代码都会生效。
+    由于不同的浏览器对CSS的支持及解析结果不一样，还由于CSS中的优先级的关系。
+    我们就可以根据这个来针对不同的浏览器来写不同的CSS。
+        书写顺序，一般是将识别能力强的浏览器的CSS写在前面。如果某个浏览器不识别某样式，会被过滤掉，会被写在后面的样式覆盖掉，
+    一些CSS Hack由于浏览器存在交叉认识，所以需要通过层层覆盖的方式来实现对不同浏览器进行Hack的。下面详细说一下。
+2.各浏览器CSS hack兼容表：
+                     IE6	IE7	    IE8	   IE9	  FireFox	Chrome	 safari	  opera
+        “!important”		 Y			             Y	      Y
+        “_”	          Y
+        “*”	          Y	     Y
+        "+”		             Y
+        “/**/”		         Y	     Y	    Y	     Y	      Y	       Y	    Y
+        “/*\**/”		     Y	     Y
+        “\9\0”				                Y
+        "\9"          Y      Y       Y      Y
+        “:root”				                Y	     Y	      Y
+        “nth-of-type(1)”					         Y	      Y		            Y
+        “[;属性：属性值;];”						              Y
+3.CSS内部hack
+    CSS内部hack包括："*"、"_"、"+"、"\0"、"\9"、"\9\0"、"!important"、"[;属性:属性值;];"、"/**/"、"/*\**/"等。
+    用法：
+        IE6:_属性名:属性值;如：_color:red;
+        IE6、7:*属性名:属性值;如：*color:red;
+        IE7:+属性名:属性值;如：+color:red;
+        IE7、8:属性名/*\**/:属性值\9;如：color/*\**/:red\9;
+        IE8、9:属性名:属性值\0;如：color:red\0;
+        IE9:属性名:属性值\9\0;如：color:red\9\0;
+        All IE:属性名:属性值\9;如：color:red\9;
+        IE7、FireFox、Chrome:属性名:属性值 !important;如：color:red !important;
+        Chrome、safari:[;属性名:属性值;];;如：[;color:red;];,方括号内外的三个“；”不能去掉;
+        except IE6:属性名:/**/属性值;如：color:/**/red;
+        all browser:属性名:属性值，如：color:red;
+4.选择器hack
+    用法：
+        IE6:*html 选择符{属性名：属性值；}，如：*html p{font-size:30px;}
+
+        IE7:*+html 选择符{属性名：属性值；}，如：*+html p{font-size:30px;}
+
+        IE7:html* 选择符{属性名：属性值；}，如：html* p{font-size:30px;}
+
+        IE7:*:first-child+html 选择符{属性名：属性值；}，如：*:first-child+html p{font-size:30px;}
+
+        IE8、FF、Chrome:选择符{属性名：属性值/},如：p{font-size:30px;/}
+
+        IE8+和非IE:选择符:lang(zh-cn){属性名:属性值;}，如：p:lang(zh-cn){font-size:30px;}
+
+        IE9+和非IE：选择符:nth-child(1){属性名:属性值;},如：p:nth-child(1){font-size:30px;}
+
+        IE9::root 选择符{属性名：属性值\9；}，如：:root p{font-size:30px\9;}
+
+        FireFox only. 1+:选择符, x:-moz-any-link{属性名：属性值}，如：p,x:-moz-any-link{font-size:30px;}
+
+        FireFox 3.0+:选择符,x:-moz-any-link,x:default{属性名：属性值；}，如：p,x:-moz-any-link,x:default{font-size:30px;}
+
+        FireFox:@moz-document url-prefix(){选择符{属性名：属性值；}}，如：
+            @-moz-document url-prefix(){body{background-color:pink;}}
+            
+        IE 9/10, FireFox 3.5+, Opera:@media screen and (min-resolution: +72dpi){选择符{属性名：属性值；}},如：
+            @media screen and (min-resolution:+72dpi){p{font-size:30px;}}
+
+        Chrome、Safari:@media screen and (-webkit-min-device-pixel-ratio:0){选择符{属性名：属性值；}}，如：
+            @media screen and (-webkit-min-device-pixel-ratio:0){body{background-color:yellow;}}
+
+        Chrome、Safari:选择符{(-bracket-:hack;color:red;);},如：p{(-bracket-:hack;color:red;);},其中的圆括号可以换成方括号
+
+        Safari 2 - 3.1:html[xmlns*=""]:root 选择符{属性名：属性值；}，如:html[xmlns*=""]:root p{font-size:30px;}
+
+        Safari 2-3:html[xmlns*=""] body:last-child 选择符{属性名：属性值；}，如：html[xmlns*=""] body:last-child p{font-size：30px;}
+
+        Safari 2 - 3.1, Opera 9.25:*|html[xmlns*=""] 选择符{属性名：属性值；},如：*|html[xmlns*=""] p{font-size:30px;}
+
+        safari 3+, chrome 1+, opera9+, ff 3.5+:body:nth-of-type(1) 选择符{属性名：属性值；}，如：body:nth-of-type(1) p{font-size:30px;}
+
+        safari 3+, chrome 1+, opera9+, ff 3.5+:body:first-of-type 选择符{属性名：属性值；}，如：body:first-of-type p{font-size:30px;}
+
+        Opera 9.27 and below, safari 2:html:first-child 选择符{属性名：属性值；}，如：html:first-child p{font-size:30px;}
+
+        Opera:@media all and (min-width:0){选择符{属性名：属性值\0；}}，如果不加\0,ff、chrome、safari也都认识。如：
+            @media all and (min-width:0){body{background-color:gray\0;}}
+
+        Opera:@media all and (-webkit-min-device-pixel-ratio:10000),not all and (-webkit-min-device-pixel-ratio:0){选择符{属性名：属性值；}}，如：
+            @media all and (-webkit-min-device-pixel-ratio:10000),not all and (-webkit-min-device-pixel-ratio:0){body{background-color:red；}}
+
+        IE9、FireFox、Chrome、Safari、Opera：@media all and (min-width:0){选择符{属性名：属性值；}},如：
+            @media all and (min-width:0){body{background-color:red;}}
+
+        IE9、FireFox、Chrome、Safari、Opera: :root *> 选择符{属性名：属性值；},如：:root *> p{font-size:30px;}
+
+        IE8、IE9、FireFox、Chrome、Safari、Opera：html>/**/body 选择符{属性名：属性值；},如：
+            html>/**/body p{background-color:red;}
+
+        IE7、IE8、IE9、FireFox、Chrome、Safari、Opera：html>body 选择符{属性名：属性值；},如：
+            html>body p{background-color:red;}
+
+        IE:@media \0screen{选择符{属性名：属性值}}，如：@media \0screen{p{font-size:30px;}}
+
+        iPhone：@media screen and (max-device-width:480px){选择符{属性名：属性值；}},如：
+            @media screen and (max-device-width:480px){body{background-color：red；}}
+5.IE条件注释
+    A.简介
+      IE中的条件注释（Conditional comments）对IE的版本和IE非IE有优秀的区分能力，是WEB设计中常用的hack方法。
+      条件注释只能用于IE5以上。如果你安装了多个IE，条件注释将会以最高版本的IE为标准。
+      条件注释的基本结构和HTML的注释(<!– –>)是一样的。因此IE以外的浏览器将会把它们看作是普通的注释而完全忽略它们。
+      IE将会根据if条件来判断是否如解析普通的页面内容一样解析条件注释里的内容。
+    B.属性
+        gt : greater than，选择条件版本以上版本，不包含条件版本
+        lt : less than，选择条件版本以下版本，不包含条件版本
+        gte : greater than or equal，选择条件版本以上版本，包含条件版本
+        lte : less than or equal，选择条件版本以下版本，包含条件版本
+        ! : 选择条件版本以外所有版本，无论高低
+    C.使用方法
+        注意把代码中的<>换成英文中相应的大于或小于号
+            <!--[if IE 5]>仅IE5.5可见<![endif]-->
+            <!--[if gt IE 5.5]>仅IE 5.5以上可见<![endif]-->
+            <!--[if lt IE 5.5]>仅IE 5.5以下可见<![endif]-->
+            <!--[if gte IE 5.5]>IE 5.5及以上可见<![endif]-->
+            <!--[if lte IE 5.5]>IE 5.5及以下可见<![endif]-->
+            <!--[if !IE 5.5]>非IE 5.5的IE可见<![endif]-->
+        下面的代码是在非IE浏览器下运行的条件注释
+            <!--[if !IE]><!-->您使用不是 Internet Explorer<!--<![endif]-->
+            <!--[if IE 6]><!-->您正在使用Internet Explorer version 6或者 一个非IE 浏览器<!--<![endif]-->
+    D.例子
+        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=" />
+                <title>演示: 区分 IE6 / IE7 /IE8 /FireFox</title>
+
+                <style>
+                    p.ie{
+                        height:60px;text-align:center;line-height:60px;border:1px dashed #bbb;background:#f7f7f7;
+                        color:blue;
+                        color:brown\9;
+                        +color:red;
+                        _color:green;
+                        color:blue !important;
+                    }
+                </style>
+            </head>
+
+            <body>
+                <p class="ie">
+                    <span style="display:block;display:none\9;">嘿嘿，小子竟然也用FireFox，蓝色文字。</span>
+                    <!--[if IE 8]>不错不错，挺先进的嘛，使用IE8呢！文字是褐色的。<![endif]-->
+                    <!--[if IE 7]>你，IE7，红色文字！<![endif]-->
+                    <!--[if IE 6]>孩子，虽然显示的是绿色文字，不过，IE6可不是好东西呢！<![endif]-->
+                </p>
+            </body>
+        </html>
+        在不同的版本的IE浏览器中，<span>标签中的文字表现不同。
+
+6.FF和IE
+    （1）DOCTYPE 影响 CSS 处理;
+    HTML 4.01 Transitional:<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+        HTML 4.01 Frameset:<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+          XHTML 1.0 Strict:<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+    XHTML 1.0 Transitional:<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+        XHTML 1.0 Frameset:<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+                 XHTML 1.1:<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+    （2）FF: div 设置 margin为auto时居中, IE 不行;如果想用使整个页面要居中，建议不要套在一个DIV里，可以拆出多个div并在每个拆出的div里定义margin: auto；
+    （3）FF: 设置 padding 后,div会增加height和width,IE各个版本的浏览器中也有类似的现象,可用 !important 为 FF 特别设置样式；
+    （4）div 的垂直居中问题: vertical-align:middle; line-height和height值相同才会垂直居中,缺点是要控制内容不要换行；
+    （5）cursor: pointer可以同时在IE、FF中显示游标手指状， hand仅IE可以；
+    （6）FF: 链接加边框和背景色，需设置 display: block, 同时设置 float: left 保证不换行。参照 menubar, 给 a 和 menubar 设置高度是为了避免底边显
+        示错位, 若不设 height, 可以在 menubar 中插入一个空格；
+    （7）ul标签在FF中默认是有list-style和padding，所以最好事先声明, 以避免不必要的麻烦；而在IE中只有margin有值所以先定义ul{margin:0;padding:0;}就能解决大部分问题；
+    （8）作为外部wrapper的div不要定死高度,最好还加上overflow:hidden，以达到高度自适应;
+    （9）左边对象浮动，右边采用外补丁的左边距来定位，右边对象内的文本会离左边有3px的间距，
+            CSS样式：
+                #box{ float:left; width:800px;}
+                #left{ float:left; width:50%;}
+                #right{ width:50%;}
+                *html #left{ margin-right:-3px; //这句是关键}
+            HTML代码：
+                <div id="box">
+                    <div id="left"></div>
+                    <div id="right"></div>
+                </div>
+    （10）兼容IE7，不大量修改现有代码又能在IE8中正常使用，微软声称，添加<meta http-equiv="x-ua-compatible" content="ie=7" />就行。
+7.注意事项
+    （1）float的div一定要闭合；
+        例如：(其中floatA、floatB的属性已经设置为float:left;)
+
+        <div id=”floatA” ></div>
+        <div id=”floatB” ></div>
+        <div id=”NOTfloatC” ></div>
+            这里的NOTfloatC并不希望继续平移，而是希望往下排。这段代码在IE中毫无问题，问题出在FF。原因是NOTfloatC并非float标签，必须将float
+        标签闭合。在<div class=”floatB”></div>和<div class=”NOTfloatC”></div>之间加上<div class=”clear”></div>，这个div一定要注意
+        声明位置，必须与两个具有float属性的div同级而且之间不能存在嵌套关系，否则会产生异常。
+            并且将clear这种样式定义为为如下即可：
+                .clear{clear:both;}
+            此外，为了让高度能自动适应，要在wrapper里面加上overflow:hidden;
+            当包含float的box的时候，高度自动适应在IE下无效，这时候应该触发IE的layout私有属性用zoom:1;可以做到，这样就达到了兼容。
+            例如某一个wrapper如下定义：
+                .colwrapper{overflow:hidden;zoom:1;margin:5px auto;}
+    （2）margin加倍的问题
+        设置为float的div在ie下设置的margin会加倍。这是一个ie6都存在的bug。解决方案是在这个div里面加上display:inline;
+        例如：<div id=”imfloat”></div>
+            相应的css为:
+            #imfloat{
+                float:left;
+                margin:5px;/*IE下理解为10px*/
+                display:inline;/*IE下再理解为5px*/}
+    （3）关于容器的包涵关系
+            很多时候，尤其是容器内有平行布局，例如两、三个float的div时，宽度很容易出现问题。在IE中，外层的宽度会被内层更宽的div挤破。一定要
+        用Photoshop或者Firework量取像素级的精度。
+    （4）关于高度的问题
+            如果是动态地添加内容，高度最好不要定义。浏览器可以自动伸缩，如果是静态的内容，高度最好定好，似乎有时候不会自动往下撑开.
+        高度不适应是当内层对象的高度发生变化时外层高度不能自动进行调节，特别是当内层对象使用margin 或padding 时。
+        例如：
+            CSS：
+                #box {background-color:#eee;}
+                #box p{margin-top: 20px;margin-bottom: 20px; text-align:center;}
+            HTML：
+                <div id="box">
+                    <p>p对象中的内容</p>
+                </div>
+            解决方法：在p对象上下各加2个空的div对象，CSS代码为{height:0px;overflow:hidden;}或者为div加上border属性。
+    （5）属性选择器(这个不能算是兼容,是隐藏css的一个bug)：p[id]{}，div[id]{}
+            这个对于IE6.0及以下的版本都隐藏,FF和OPera作用；属性选择器和子选择器是有区别的,子选择器的范围从形式来说不如属性选择器的范围大,
+        如p[id]中,所有p标签中有id的都是同样式的.
+    （6）IE捉迷藏的问题
+            当div应用复杂的时候每个栏中又有一些链接，DIV等这个时候容易发生捉迷藏的问题。有些内容显示不出来，当鼠标选择这个区域是发现内容确实
+        在页面。
+            解决办法：对#layout使用line-height属性或者给#layout使用固定高和宽，页面结构尽量简单。
+    （7）BOX解释不一致
+            div{width:300px;margin:0 10px 0 10px;}
+        IE5下：div的宽度会被解释为300px-10px(右填充)-10px(左填充)最终div的宽度为280px；
+        IE6和其他浏览器：宽度是以300px+10px(右填充)+10px(左填充)=320px来计算的。
+            可以做如下修改：
+                div{width:300px !important;width /**/:340px;margin:0 10px 0 10px}
+            这样在各个浏览器中，这个div的宽度都是320px；
+        在mozilla firefox和IE中的BOX模型解释不一致导致相差2px解决方法：
+            div{margin:30px !important;margin:28px;}注意这两个margin的顺序一定不能写反，！important这个属性IE不能识别，但别的浏览器可以
+        识别。所以在IE下其实解释成这样：div{maring:30px;margin:28px}重复定义的话按照最后一个来执行，所以不能写margin:XXpx! important。
+8.以下两种方法几乎能解决现今所有HACK
+    （1）.!important，能区分FF和IE；
+    （2）.*+html 与 *html是IE特有的标签,firefox暂不支持.而*+html又为IE7特有标签.
+        <style>
+            #wrapper
+            {
+                #wrapper { width: 120px; } /* FireFox */
+                *+html #wrapper { width: 60px;} /* ie7 fixed*/
+                *html #wrapper { width: 80px;} /* ie6 fixed , 注意顺序 */
+            }
+        </style>
+        当样式写在一起时，顺序一般是firefox、IE8、IE7、IE6，各个浏览器会根据它自己的情况优先执行它所支持的css，而在页面中呈现相应的效果。
+        注意:*+html对IE7的HACK必须保证HTML顶部有如下声明：
+            <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"　"http://www.w3.org/TR/html4/loose.dtd">
+9.浏览器专属css hack
+        <p id="opera">我来自 Opera 7.2 - 9.5</p>
+        <p id="safari">我是神奇的 Safari</p>
+        <p id="firefox">我来自 FireFox</p>
+        <p id="firefox12">我是你爷爷 FireFox 1 - 2 </p>
+        <p id="ie7">我是囧 IE 7</p>
+        <p id="ie6">我是脑瘸 IE 6</p>
+    （1）使用IE CSS条件注释区分IE浏览器
+        <!--[if IE 7]><style type="text/css"></style><![endif]-->
+        <!--[if IE 6]><style type="text/css"></style><![endif]-->
+    （2）使用CSS解析器Hacks区分IE
+        虽说IE条件注释十分简单好用，但是如果你想把全部的CSS放到一个文件里的话，那么你不得不使用别的方法。注意这里的IE7 Hack将只对IE7有效，
+        因为IE6根本不知道>选择符。同时你也得注意>选择符对于其他浏览器同样是无效的。
+        /*IE7*/：html > body #ie7{*display: block;}
+        /*IE6*/：body #ie6{_display: block;}
+    （3）CSS Hack区分FireFox
+        第一个使用了 body:empty来区分FireFox1和2 。
+        第二个 hack使用了全部FireFox浏览器的专有扩展-moz。-moz只对FireFox有效，使用这个Hack大可不必担心其他浏览器的影响。
+        /*FireFox1-2*/：body:empty #firefox12{display: block;}
+        /*FireFox*/：@-moz-document url-prefix(){#firefox{display: block;}}
+    （4）CSS Hack区分Safari
+        Safari的CSS hack与FireFox的hack看起来很像，使用的是 Safari浏览器的专有扩展-webkit且只对Safari浏览器有效。
+        /*Safari*/
+        @media screen and (-webkit-min-device-pixel-ratio:0)
+        {#safari { display: block; }}
+    （5）CSS Hack区分Opera
+        /* Opera */
+        @media all and (-webkit-min-device-pixel-ratio:10000), not all and (-webkit-min-device-pixel-ratio:0)
+        {head~body #opera { display: block; }}
+    更详细的浏览器专属css hack。
+10.其他
+        (1)min-width是个非常方便的CSS命令，它可以指定元素最小也不能小于某个宽度，这样就能保证排版一直正确，但IE不认得min-这个定义，实际上它
+    把正常的width和height当作有min的情况来使。如果只用宽度和高度，正常的浏览器里这两个值就不会变，如果只用min-width和min-height的话，IE
+    下面根本等于没有设置宽度和高度。
+        比如要设置背景图片，这个宽度是比较重要的。要解决这个问题，可以这样：
+            #box{width:80px;height:35px;}
+            html>body #box{width:auto;height:auto;min-width:80px;min-height:35px;}
+        (2)在CSS样式前加前缀来区分不同浏览器
+            在一些现有的css样式前加上前缀，可以区分出不同的浏览器。这几种前缀如下：
+            -weikit:/*Chrome Safari 3.1+*/
+            -moz:/*FireFox 3.5+*/
+            -ms:/*IE9*/
+            -O:/*Opera 10.50–12.00*/
+            用法：
+                <style>
+                    p{
+                        box-shadow:10px 10px 10px 10px #ffffff;
+                        -webkit-box-shadow:20px 20px 20px 20px #ffffff;
+                        -moz-box-shadow:30px 30px 30px 30px #ffffff;
+                        -ms-box-shadow:40px 40px 40px 40px #ffffff;
+                        -o-box-shadow:50px 50px 50px 50px #ffffff;
+                    }
+                </style>
+            这样就能在同一个css文件中来确定同一页面在不同浏览器表现出自己想要的效果。
+            注意：有些浏览器中必须先定义样式，之后才能加前缀，如FF；而有些不用定义样式就可以，如Chrome。但浏览器中并不是所有的样式都可以这样做，有些样式是不支持的。
+            就像上面的例子，如果把box-shadow:10px 10px 10px 10px #ffffff;这一句注释掉，在Chrome中没有关系，但在FF中，特殊的阴影效果就显示不出来了。
+
+

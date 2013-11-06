@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <title>其他问题</title>
+
+    <style>
+        body{
+            background-color: gray;
+        }
+        p{
+            background: url(../img/1.jpg) no-repeat;
+            color:yellow;
+        }
+        #box{ width: 80px; height: 50px;}
+        html>/**/body #box{ width: auto; height: auto; min-width: 80px; min-height: 50px;}
+    </style>
+</head>
+
+<body>
+    <div style="background:none;">
+        （1）min-width:<br>
+        <span>&emsp;&emsp;min-width是个非常方便的CSS命令，它可以指定元素最小也不能小于某个宽度，这样就能保证排版一直正确，但IE不认得min-
+            这个定义，实际上它把正常的width和height当作有min的情况来使。如果只用宽度和高度，正常的浏览器里这两个值就不会变，如果只用min-width
+            和min-height的话，IE下面根本等于没有设置宽度和高度。<br/>
+            &emsp;&emsp;比如要设置背景图片，这个宽度是比较重要的。要解决这个问题，可以这样：<br/>
+            &emsp;&emsp;&emsp;&emsp;#box{ width: 80px; height: 50px;}<br/>
+            &emsp;&emsp;&emsp;&emsp;html>body #box{ width: auto; height: auto; min-width: 80px; min-height: 50px;}
+        </span>
+    </div>
+    <div>
+        <p id="box">在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果
+            在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果
+            在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果在IE中查看效果</p>
+    </div>
+    <div>
+        <span>
+            &emsp;&emsp;因为IE不认识min-width和min-height，所以定义了如下样式:<br/>
+            &emsp;&emsp;&emsp;&emsp;#box{ width: 80px; height: 50px;}<br/>
+            &emsp;&emsp;&emsp;&emsp;html>body #box{ width: auto; height: auto; min-width: 80px; min-height: 50px;}<br/>
+            &emsp;&emsp;IE会执行#box{ width: 80px; height: 50px;}，确定了id为box的元素的大小为80*50px;而其他的浏览器不仅认识html>body,
+            也认识min-width和min-height,执行html>/**/body #box{ width: auto; height: auto; min-width: 80px; min-height: 50px;}
+            这一句定义，这样使元素最小不会小于80*50px，又因为有width和height为auto，可以适应内容的变化.
+        </span>
+    </div>
+    <div>
+        (2)在CSS样式前加前缀来区分不同浏览器<br/>
+        &emsp;&emsp;在一些现有的css样式前加上前缀，可以区分出不同的浏览器。这几种前缀如下：<br/>
+        &emsp;&emsp;&emsp;&emsp;-weikit:/*Chrome Safari 3.1+*/<br/>
+        &emsp;&emsp;&emsp;&emsp;-moz:/*FireFox 3.5+*/<br/>
+        &emsp;&emsp;&emsp;&emsp;-ms:/*IE9*/<br/>
+        &emsp;&emsp;&emsp;&emsp;-O:/*Opera 10.50–12.00*/<br/>
+        &emsp;&emsp;用法：<br/>
+        &emsp;&emsp;&emsp;&emsp;&lt;style&gt;<br/>
+        &emsp;&emsp;&emsp;&emsp;&emsp;p{<br/>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;box-shadow:10px 10px 10px 10px #ffffff;<br/>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-webkit-box-shadow:20px 20px 20px 20px #ffffff;<br/>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-moz-box-shadow:30px 30px 30px 30px #ffffff;<br/>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-ms-box-shadow:40px 40px 40px 40px #ffffff;<br/>
+        &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-o-box-shadow:50px 50px 50px 50px #ffffff;<br/>
+        &emsp;&emsp;&emsp;&emsp;&emsp;}<br/>
+        &emsp;&emsp;&emsp;&emsp;&lt;/style&gt;<br/>
+        &emsp;&emsp;这样就能在同一个css文件中来确定同一页面在不同浏览器表现出自己想要的效果。<br/>
+        &emsp;&emsp;注意：<br/>
+        &emsp;&emsp;&emsp;有些浏览器中必须先定义样式，之后才能加前缀，如FF；而有些不用定义样式就可以，如Chrome。但并不是所有的样式都可以这样做，
+        有些样式是不支持的。  就像上面的例子，如果把box-shadow:10px 10px 10px 10px #ffffff;这一句注释掉，在Chrome中没有关系，但在FF中，特殊的
+        阴影效果就显示不出来了。
+
+
+
+    </div>
+</body>
+</html>

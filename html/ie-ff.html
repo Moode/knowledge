@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>IE和FireFox中的部分细节内容</title>
+
+    <style>
+        body{
+            background-color: gray;
+        }
+        p{
+            border:1px solid red;
+            width:50%;
+            height:auto;
+            margin:10px auto;
+            background-color: greenyellow;
+        }
+        #pointer{cursor:pointer;}
+        #hand{cursor:hand;}
+        .div1{
+            width:100%;
+            background:gray;
+            border:none;
+        }
+        .div2{
+            margin:auto;
+            background:greenyellow;
+            border:1px solid red;
+            width:600px;
+        }
+        a{
+            border:1px solid red;
+            width:100px;margin:auto;
+            background:yellow;
+        }
+        #box{ float:left; width:800px;border:1px solid red;}
+        #left{ float:left; width:50%;border:1px solid red;}
+        #right{ width:50%;border:1px solid red;}
+        html>#right{margin-right:-3px;}
+    </style>
+</head>
+<body>
+    <div class="div1">IE和FireFox中的部分细节内容<br />
+        （1）DOCTYPE 影响 CSS 处理;<br />
+        &emsp;&emsp;HTML 4.01 Transitional:&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;<br />
+        &emsp;&emsp;HTML 4.01 Frameset:&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd"&gt;<br />
+        &emsp;&emsp;XHTML 1.0 Strict:&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;<br />
+        &emsp;&emsp;XHTML 1.0 Transitional:&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;<br />
+        &emsp;&emsp;XHTML 1.0 Frameset:&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"&gt;<br />
+        &emsp;&emsp;XHTML 1.1:&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;<br />
+        &emsp;&emsp;其实这才是更好的方法，每个html都应该有这样的声明，虽然有时声明了，各个浏览器也不是
+        特别守规矩，可它都算一个标准呀！而CSS hack只是一种没有办法的办法，而且CSS hack也没有特别统一的标准，只是大家靠实践总结出来的一些经验。
+    </div>
+    <div class="div1">
+        （2）FF: div设置margin为auto时居中, IE 不行;如果想使整个页面居中，建议不要套在一个DIV里，可以拆出多个div并在每个拆出的div里定义margin: auto;<br />
+         <div class="div2">我是一个设置了margin为auto的&lt;div&gt;,我水平居中了。据说在IE中不行</div>
+    </div>
+    <div class="div1">
+        （3）FF: 设置 padding 后,div会增加height和width,IE各个版本的浏览器中也有类似的现象,可用 !important 为 FF 特别设置样式；用各个IE优先识别的特殊符号来使页面在各个浏览器中表现趋于一致。<br />
+        <div class="div2">我没有设置padding,我的height和width没有增加。</div>
+        <div class="div2" style="padding:10px;">我设置了padding,我的height和width增加了。</div>
+        &emsp;&emsp;以上现象在IE中也有，这其实是各个浏览器对盒式模型理解不同导致的。<br />
+        &emsp;&emsp;IE5下<br />
+        &emsp;&emsp;div{width:300px;margin:0 10px 0 10px;}<br />
+        &emsp;&emsp;div的宽度会被解释为300px-10px(右填充)-10px(左填充)最终div的宽度为280px，
+        而在IE6和其他浏览器上宽度则是以300px+10px(右填充)+10px(左填充)=320px来计算的。
+        可以做如下修改:<br />
+        &emsp;&emsp;div{width:300px!important;width /**/:340px;margin:0 10px 0 10px}<br />
+    </div>
+    <div class="div1">
+        （4）div中内容文字的垂直居中问题: vertical-align:middle; line-height和height值相同才会垂直居中,缺点是要控制内容不要换行，否则内容会超出div而显示；<br />
+         <div class="div2" style="vertical-align:middle;height:50px;">我设置了vertical-align为middle，可我的行高和高度不同，文字没有垂直居中。</div>
+         <div class="div2" style="height:50px;line-height: 50px;">我没有设置vertical-align属性，但我的行高和高度相同，文字垂直居中。</div>
+         <div class="div2" style="height:50px;line-height: 50px;">我没有设置vertical-align属性，行高和高度相同，可文字太多了，换行之后，我的内容超出了div的界限。</div>
+    </div>
+    <div class="div1" style="margin-top:50px;">
+        （5）cursor: pointer可以同时在IE、FF中显示游标手指状， hand仅IE可以；<br />
+        <div id="pointer" class="div2" style="vertical-align:middle;">鼠标指针为小手,FF和Chrome认识pointer,当你把鼠标移到我上面时，鼠标变成小手。</div>
+        <div id="hand" class="div2" style="vertical-align:middle;">鼠标指针为指针，FF不认识hand，Chrome也不认识，当你把鼠标移到我上面时，鼠标仍然是箭头。</div>
+    </div>
+    <div class="div1">
+        （6）FF: 链接加边框和背景色，需设置display: block,同时设置float:left保证不换行。参照menu bar,给a和menu bar设置高度是为了避免底边显示错位,若不设height,可以在menu bar中插入一个空格；<br />
+        &emsp;&emsp;我们的公共样式是这样的：<br />
+        &emsp;&emsp;style="border:1px solid red;width:100px;margin:auto;background:yellow;"<br />
+        <a href="" >我是一个无意义的超链接</a><br/>
+        <a href="" style="display:block;">我是一个无意义的超链接,我设置了display为block</a><br/>
+        <a href="" style="float:left;">我是一个无意义的超链接，我设置了float为left</a><br/>
+        <a href="" style="display:block;float:left;">我是一个无意义的超链接，我设置了float为left，我也设置了display为block</a><br/>
+        <p>我没看出来是怎么回事！</p>
+    </div>
+    <div class="div1" style="margin-top:130px;">
+        （7）ul标签在FF中默认是有padding和list-style值的,而在IE中只有margin有值所以先定义 ul{margin:0;padding:0;}就能解决大部分问题；<br />
+         <ul style="background: green;">
+             <li style="background:greenyellow;">只有我一个&lt;li&gt;</li>
+         </ul>
+         <ul style="background: green;margin:0px;padding:0px;">
+             <li style="background:greenyellow;">我是另一个ul中的&lt;li&gt;这个ul设置了margin和padding为0,结果连小黑点都消失了。</li>
+         </ul>
+    </div>
+    <div class="div1">
+        （8）作为外部 wrapper的div不要定死高度, 最好还加上overflow: hidden.以达到高度自适应;<br />
+         <div class="div2" style="width:60%;height: 50px;">
+             我的高度是50px我的高度是50px我的高度是50px我的高度是50px我的高度是50px我的高度是50px我的高度是50px我的高度是50px
+             我的高度是50px我的高度是50px我的高度是50px我的高度是50px我的高度是50px我的高度是50px我的高度是50px我的高度是50px
+         </div>
+         <div class="div2" style="width:60%;height:auto;overflow:hidden;margin-top:50px;">
+             我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto
+             我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto
+             我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto我的高度是auto
+         </div>
+    </div>
+    <div class="div1">
+        （9）左边对象浮动，右边采用外补丁的左边距来定位，右边对象内的文本会离左边有3px的间距，<br />
+        &emsp;&emsp;#box{ float:left; width:800px;}<br/>
+        &emsp;&emsp;#left{ float:left; width:50%;}<br/>
+        &emsp;&emsp;#right{ width:50%;}<br/>
+        &emsp;&emsp;*html #left{ margin-right:-3px; //这句是关键}<br/>
+        &emsp;&emsp;HTML代码：<br/>
+        &emsp;&emsp;&lt;div id="box"&gt;<br/>
+        &emsp;&emsp;&lt;div id="left"&gt;&lt;/div&gt;<br />
+        &emsp;&emsp;&lt;div id="right"&gt;&lt;/div&gt;<br />
+        &emsp;&emsp;&lt;/div&gt;<br/>
+
+        <p>可是实际上，好像在FF中不是这样的。</p>
+        <div id="box">
+            <div id="left">我在左边</div>
+            <div id="right">我在右边,如果按照上面的描述，我的文字应该距离左边有3px，可是我没有。</div>
+        </div>
+    </div>
+    <div style="clear:both;"></div>
+    <div class="div1" style="margin-top:30px;">
+        （10）兼容IE7，不大量修改现有代码又能在IE8中正常使用，微软声称，添加&lt;meta http-equiv="x-ua-compatible" content="ie=7" /&gt;就行；
+    </div>
+</body>
+</html>

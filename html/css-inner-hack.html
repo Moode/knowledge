@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>CSS内部hack</title>
+
+    <style>
+        body{
+            background: gray;
+        }
+        p{
+            width:80%;
+            heigth:auto;
+            margin:auto;
+            border:1px dotted blue;
+            background:greenyellow;
+            color:black;font-size:30px;
+        }/*All Browser*/
+        #ie{border:3px solid red\9;}/*ALL IE*/
+        #exceptie{font-size:/**/50px;}/*except ie*/
+        #ie6{_color:red;_font-size:10px;}/*IE6*/
+        #ie7{+color:orange;+font-size:20px;}/*IE7*/
+        #ie78{color/*\**/:gray;font-size/*\**/:100px;}/*IE7和IE8*/
+        #ie8{color:yellow\0;font-size:30px\0;}/*IE8*/
+        #ie9{color:green\9\0;font-size:40px\9\0;}/*IE9*/
+        #ff{color:red !important;font-size: 50px !important;}/*IE7 FF Chrome*/
+        #chrome{[;color:purple;];[;font-size: 60px;];}/*Chrome*/
+    </style>
+</head>
+<body>
+    <div>
+        <p id="ie">我的id是ie，在所有IE浏览器中都有红色边框。</p>
+        <p id="exceptie">我的id是exceptie，在除了IE6中都是一个样子。</p>
+        <p id="ie6">我的id是ie6，字体颜色是红色，字体大小是10px；否则，不是ie6。</p>
+        <p id="ie7">我的id是ie7，字体颜色是橙色，字体大小是20px；否则，不是ie7。</p>
+        <p id="ie78">我的id是ie78，字体颜色是灰色，字体大小是100px。</p>
+        <p id="ie8">我的id是ie8，字体颜色是黄色，字体大小是30px；否则，不是ie8。</p>
+        <p id="ie9">我的id是ie9，字体颜色是绿色，字体大小是40px；否则，不是ie9。</p>
+        <p id="ff">我的id是ff，字体颜色是蓝色，字体大小是50px；否则，不是ff或chrome。</p>
+        <p id="chrome">我的id是chrome，字体颜色是紫色，字体大小是60px；否则，不是chrome。</p>
+        <p id="test">我的id是test，字体颜色是紫色，字体大小是60px；否则，不是chrome。</p>
+    </div>
+</body>
+</html>

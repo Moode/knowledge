@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>注意事项</title>
+
+    <style>
+        body{background-color: gray;}
+        p{
+            width:60%;
+            height:auto;
+            margin:10px auto;
+            border:1px solid red;
+            background-color: greenyellow;
+        }
+        .div1{
+            width:100%;
+            border:none;
+            background:gray;
+        }
+        .div2{
+            width:60%;
+            height:auto;
+            margin:auto;
+            border:1px solid red;
+            background:greenyellow;
+        }
+        .left{float:left;}
+        p[id]{background:red;}
+    </style>
+</head>
+<body>
+    <div>注意事项</div>
+    <div>
+        （1）float的div一定要闭合；<br>
+        &emsp;&emsp;例如：(其中floatA、floatB的属性已经设置为float:left;)<br/>
+
+        &emsp;&emsp;&lt;div id=”floatA”&gt;&lt;/div&gt;<br/>
+        &emsp;&emsp;&lt;div id=”floatB”&gt;&lt;/div&gt;<br/>
+        &emsp;&emsp;&lt;div id=”NOTfloatC”&gt;&lt;/div&gt;<br/>
+        &emsp;&emsp;这里的NOTfloatC并不希望继续平移，而是希望往下排。这段代码在IE中毫无问题，问题出在FF。原因是NOTfloatC并非float标签，
+        必须将float标签闭合。<br/>
+        &emsp;&emsp;在&lt;div class=”floatB”&gt;&lt;/div&gt;和&lt;div class=”NOTfloatC”&gt;&lt;/div&gt;之间加上&lt;div class=”clear”&gt;&lt;/div&gt;，
+        这个div一定要注意声明位置，必须与两个具有float属性的div同级而且之间不能存在嵌套关系，否则会产生异常。
+        并且将clear这种样式定义为为如下即可：.clear{clear:both;}
+        <div class="div2" style="overflow:hidden;zoom:1;margin:5px auto;">
+            <div class="left" style="background:red;">我左浮动</div>
+            <div class="left" style="background:yellow;">我也左浮动</div>
+            <div style="background:pink;">我不想浮动,可是我没有清除浮动</div>
+        </div>
+        <div class="div2" style="height:50px;">
+            <div class="left" style="background:red;">我左浮动</div>
+            <div class="left" style="background:yellow;">我也左浮动</div>
+            <div style="clear:both;"></div>
+            <div style="background:pink;">我不想浮动,所以我清除浮动，我没有浮动</div>
+        </div>
+        <div class="div2" style="height:50px;">
+            <div class="left" style="background:red;">我左浮动</div>
+            <div class="left" style="background:yellow;">
+                我也左浮动
+                <div style="clear:both;"></div>
+            </div>
+            <div style="background:pink;">我不想浮动,所以我清除浮动，可是清除浮动的div嵌套在了一个浮动div的里面，我仍然浮动</div>
+        </div>
+        <div>
+            &emsp;&emsp;此外，为了让高度能自动适应，要在wrapper里面加上overflow:hidden;
+            当包含float的box的时候，高度自动适应在IE下无效，这时候应该触发IE的layout私有属性用zoom:1;可以做到，这样就达到了兼容。
+            例如某一个wrapper如下定义：
+            .colwrapper{overflow:hidden;zoom:1;margin:5px auto;}<br/>
+            <p>例子没写好</p>
+            <!--<div style="background:yellowgreen;width:60%;margin:auto;">-->
+                <!--<div class="div2" style="background:red;height:auto;">我的样式是background:red;height:auto;我可以自适应高度。</div>-->
+                <!--<div class="div2" style="background:yellow;overflow:hidden;zoom:1;margin:5px auto;">我的样式是background:red;overflow:hidden;zoom:1;margin:5px auto;-->
+                    <!--我可以自适应高度，虽然没有定义height为auto。</div>-->
+                <!--<div class="div2" style="background:pink;">我的样式是background:pink;在IE下，我不可以自适应高度，因为我既没有设置height为auto，也没有定义overflow:hidden;zoom:1;-->
+                    <!--margin:5px auto;这样的样式。</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="div1">
+        （2）margin加倍的问题<br/>
+        &emsp;&emsp;设置为float的div在ie下设置的margin会加倍。这是一个ie6都存在的bug。
+        解决方案是在这个div里面加上display:inline;<br/>
+        &emsp;&emsp;例如：<br/>
+        &emsp;&emsp;&lt;div id=”iamfloat”&gt;&lt;/div&gt;<br/>
+        &emsp;&emsp;相应的css为:<br/>
+        &emsp;&emsp;#imfloat{<br/>
+        &emsp;&emsp;float:left;<br/>
+        &emsp;&emsp;margin:5px;/*IE下理解为10px*/<br/>
+        &emsp;&emsp;display:inline;/*IE下再理解为5px*/}<br/>
+        <div style="width:100%;height:50px;background:greenyellow;">
+            <div class="div2" style="float:left;">我设置了浮动,但没有设置margin</div>
+        </div>
+        <div style="width:100%;height:50px;background:red;">
+            <div class="div2" style="float:left;margin:10px;">我设置了浮动和margin，在IE中margin会加倍。</div>
+        </div>
+        <div style="width:100%;height:50px;background:greenyellow;">
+            <div class="div2" style="float:left;margin:10px;display:inline;">我设置了浮动和margin，可我设置了display为inline，在IE中margin不会加倍。</div>
+        </div>
+    </div>
+    <div>
+        （3）关于容器的包涵关系<br/>
+        &emsp;&emsp;很多时候，尤其是容器内有平行布局，例如两、三个float的div时，宽度很容易出现问题。在IE中，外层的宽度会被内层更宽的div挤破。
+        一定要用Photoshop或者Firework量取像素级的精度。
+        <div style="height:50px;border:none;background: greenyellow;width:60%;margin:auto;">
+            <div style="border:none;float:left;background:red;width:860px;">我是第一个div,宽度比外层div宽，我超出了外层div的范围。</div>
+            <div style="border:none;float:left;background:yellow;width:300px;">我是第二个div</div>
+            <div style="border:none;float:left;background:brown;width:300px;">我是第三个div</div>
+        </div>
+    </div>
+    <div>
+        （4）关于高度的问题<br/>
+        &emsp;&emsp;如果是动态地添加内容，高度最好不要定义。浏览器可以自动伸缩，如果是静态的内容，高度最好定好，似乎有时候不会自动往下撑开.
+        高度不适应是当内层对象的高度发生变化时外层高度不能自动进行调节，特别是当内层对象使用margin 或padding 时。<br/>
+        &emsp;&emsp;例：<br/>
+        &emsp;&emsp;CSS：<br/>
+        &emsp;&emsp;&emsp;#box {background-color:#eee; }<br/>
+        &emsp;&emsp;&emsp;#box p {margin-top: 20px;margin-bottom: 20px; text-align:center; }<br/>
+        &emsp;&emsp;HTML:<br/>
+        &emsp;&emsp;&emsp;&lt;div id="box"&gt;<br/>
+        &emsp;&emsp;&emsp;&emsp;&lt;p&gt;p对象中的内容&lt;/p&gt;<br/>
+        &emsp;&emsp;&emsp;&lt;/div&gt;<br/>
+        &emsp;&emsp;解决方法：在p对象上下各加2个空的div对象CSS代码：.1{height:0px;overflow:hidden;}或者为div加上border属性。<br/>
+        <p>例子没写好</p>
+        <!--<div style="background:greenyellow;margin:auto;width:60%;height:60px;">-->
+            <!--<div style="margin-top: 20px;margin-bottom: 20px; text-align:center;color:red;">我的外层div高度是60px，当我的内容超出60px的高度-->
+                <!--时，我回超出外层div而显示。</div>-->
+        <!--</div>-->
+        <!--<div style="height:0px;overflow:hidden;"></div>-->
+        <!--<div style="height:0px;overflow:hidden;"></div>-->
+        <!--<div style="background:greenyellow;margin:auto;width:60%;height:60px;">-->
+            <!--<div style="margin-top: 20px;margin-bottom: 20px; text-align:center;color:red;">我的外层div高度是60px，当我的内容超出60px的高度-->
+                <!--时，我回超出外层div而显示。</div>-->
+        <!--</div>-->
+        <!--<div style="height:0px;overflow:hidden;"></div>-->
+        <!--<div style="height:0px;overflow:hidden;"></div>-->
+    </div>
+    <div>
+        （5）属性选择器(这个不能算是兼容,是隐藏css的一个bug)：p[id]{}div[id]{}<br/>
+        &emsp;&emsp;这个对于IE6.0及以下的版本都隐藏,FF和OPera作用；属性选择器和子选择器是有区别的,子选择器的范围从形式来说不如属性选择器的
+        范围大,如p[id]中,所有p标签中有id的都是同样式的.
+        <div class="div2">
+            <p>我是个没有id的p标签</p>
+            <p id="p1">我是个没有id的p标签,所以我是红的</p>
+            <p>我是个没有id的p标签</p>
+            <p id="p2">我是个没有id的p标签，所以我是红的</p>
+        </div>
+    </div>
+    <div>
+        （6）IE捉迷藏的问题<br/>
+        &emsp;&emsp;当div应用复杂的时候每个栏中又有一些链接，DIV等这个时候容易发生捉迷藏的问题。有些内容显示不出来，当鼠标选择这个区域是发现
+        内容确实在页面。
+        解决办法：对#layout使用line-height属性 或者给#layout使用固定高和宽。页面结构尽量简单。
+        <p>例子没写好</p>
+    </div>
+    <div>
+        （7）BOX解释不一致<br/>
+        &emsp;&emsp;IE5下<br/>
+        &emsp;&emsp;div{width:300px;margin:0 10px 0 10px;}<br/>
+        &emsp;&emsp;div的宽度会被解释为300px-10px(右填充)-10px(左填充)最终div的宽度为280px，
+        而在IE6和其他浏览器上宽度则是以300px+10px(右填充)+10px(左填充)=320px来计算的。<br/>
+        &emsp;&emsp;可以做如下修改<br/>
+        &emsp;&emsp;div{width:300px!important;width /**/:340px;margin:0 10px 0 10px}<br/>
+        <div style="width:300px;height:60px;margin:auto;padding:0 10px 0 10px;background:greenyellow;border:1px solid red;">
+            我的width是300px；左右padding都是10px，在IE5中，我的最后宽度应该是280px，这一点没有测量。</div>
+        <div style="width:300px;height:60px;margin:auto;background:greenyellow;border:1px solid red;">
+            我的width是300px；左右padding都是10px，在Chrome和FF中，我的最后宽度就是280px，这是我量的，这和上面的描述不相符。</div>
+
+        <div style="width:300px;height:60px;margin:0 10px 0 10px;background:greenyellow;border:1px solid red;">
+            我的width是300px；左右margin都是10px，在IE5中，我的最后宽度应该是280px，这一点没有测量。</div>
+        <div style="width:300px;height:60px;margin:0 10px 0 10px;background:greenyellow;border:1px solid red;">
+            我的width是300px；左右margin都是10px，在Chrome和FF中，我的最后宽度就是300px，这是我量的，这和上面的描述也不相符。</div>
+
+        <div style="margin-top:20px;">
+            &emsp;&emsp;在mozilla firefox和IE中的BOX模型解释不一致导致相差2px解决方法：
+            div{margin:30px!important;margin:28px;}注意这两个margin的顺序一定不能写反，！important这个属性IE不能识别，但别的浏览器可以识别。
+            所以在IE下其实解释成这样： div{maring:30px;margin:28px}重复定义的话按照最后一个来执行，所以不可以只写margin:XXpx! important;<br/>
+        </div>
+    </div>
+</body>
+</html>
